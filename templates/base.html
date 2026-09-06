@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    {% block title %}
+    ZENVEX
+    {% endblock %}
+</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+
+<a href="/" class="logo">
+    ZEN<span>VEX</span>
+</a>
+
+<div class="nav-links">
+
+    <a href="/">
+        Home
+    </a>
+
+    <a href="/#tools">
+        AI Tools
+    </a>
+
+</div>
+
+</nav>
+
+<main>
+
+
+{% block content %}
+{% endblock %}
+
+
+</main>
+
+<footer class="site-footer">
+
+
+<div class="footer-content">
+
+    <div class="footer-brand">
+
+        <div class="footer-logo">
+            ZEN<span>VEX</span>
+        </div>
+
+        <p>
+            Intelligent tools for security,
+            career development and productivity.
+        </p>
+
+    </div>
+
+
+    <div class="footer-author">
+
+        <p class="footer-label">
+            DESIGNED & DEVELOPED BY
+        </p>
+
+        <p class="footer-name">
+            Muhammad Suleman
+        </p>
+
+        <a
+            href="https://www.linkedin.com/in/sulayman-arif-059146420/?skipRedirect=true"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="linkedin-link"
+        >
+            LinkedIn
+            <span>→</span>
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+    <p>
+        © 2026 Muhammad Suleman. All rights reserved.
+    </p>
+
+    <p>
+        ZENVEX
+    </p>
+
+</div>
+
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}">
+</script>
+
+</body>
+
+</html>

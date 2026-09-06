@@ -1,0 +1,415 @@
+{% extends "base.html" %}
+
+{% block title %}
+AI PDF Q&A | ZENVEX
+{% endblock %}
+
+{% block content %}
+
+<div class="pdf-page">
+
+    <!-- BACK BUTTON -->
+
+    <a href="/" class="pdf-back-button">
+        ← Back to ZENVEX
+    </a>
+
+
+    <!-- HERO -->
+
+    <div class="pdf-hero">
+
+        <div class="pdf-hero-badge">
+            🤖
+            <span>AI DOCUMENT ANALYSIS</span>
+        </div>
+
+        <p class="pdf-eyebrow">
+            AI PRODUCTIVITY TOOL
+        </p>
+
+        <h1>
+            PDF
+            <span>Q&A</span>
+        </h1>
+
+        <p class="pdf-hero-description">
+            Upload a PDF document and ask questions about its contents.
+            ZENVEX analyzes your document and provides relevant answers.
+        </p>
+
+    </div>
+
+
+    <!-- MAIN TOOL CARD -->
+
+    <div class="pdf-tool-card">
+
+
+        <!-- CARD HEADER -->
+
+        <div class="pdf-card-header">
+
+            <div class="pdf-main-icon">
+                📄
+            </div>
+
+            <div>
+
+                <h2>
+                    Ask Questions About Your PDF
+                </h2>
+
+                <p>
+                    Upload a document and ask the AI anything
+                    about its contents.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="pdf-form"
+        >
+
+            <!-- PDF UPLOAD -->
+
+            <label
+    for="pdf"
+    class="pdf-dropzone"
+    id="pdf-dropzone"
+>
+
+    <div class="pdf-dropzone-icon" id="pdf-upload-icon">
+        ↑
+    </div>
+
+    <strong id="pdf-file-name">
+        Choose your PDF document
+    </strong>
+
+    <span id="pdf-file-info">
+        PDF files only
+    </span>
+
+</label>
+
+<input
+    type="file"
+    id="pdf"
+    name="pdf"
+    accept=".pdf"
+    required
+    hidden
+>
+            <!-- QUESTION -->
+
+            <div class="pdf-question-group">
+
+                <label for="question">
+                    Your Question
+                </label>
+
+                <textarea
+                    id="question"
+                    name="question"
+                    rows="5"
+                    placeholder="Ask something about your document..."
+                    required
+                >{{ question or "" }}</textarea>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="pdf-analyze-button"
+            >
+                🤖 Ask AI
+                <span>→</span>
+            </button>
+
+        </form>
+
+
+        <!-- PRIVACY -->
+
+        <div class="pdf-privacy">
+
+            <span>
+                🔒
+            </span>
+
+            <p>
+                Your document is analyzed securely and is not
+                stored or shared by ZENVEX.
+            </p>
+
+        </div>
+
+
+        <!-- FEATURES -->
+
+        <div class="pdf-features">
+
+
+            <div class="pdf-feature">
+
+                <div class="pdf-feature-icon">
+                    📄
+                </div>
+
+                <div>
+
+                    <h3>
+                        PDF Analysis
+                    </h3>
+
+                    <p>
+                        Extract and analyze text
+                        from uploaded documents.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pdf-feature">
+
+                <div class="pdf-feature-icon">
+                    🤖
+                </div>
+
+                <div>
+
+                    <h3>
+                        AI Answers
+                    </h3>
+
+                    <p>
+                        Ask questions and receive
+                        answers from your document.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pdf-feature">
+
+                <div class="pdf-feature-icon">
+                    🔍
+                </div>
+
+                <div>
+
+                    <h3>
+                        Context Aware
+                    </h3>
+
+                    <p>
+                        Answers are generated using
+                        the uploaded document.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pdf-feature">
+
+                <div class="pdf-feature-icon">
+                    ⚡
+                </div>
+
+                <div>
+
+                    <h3>
+                        Simple & Fast
+                    </h3>
+
+                    <p>
+                        Upload, ask and get your
+                        answer without searching manually.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    {% if error %}
+
+    <div class="pdf-result-card pdf-error">
+
+        <div class="pdf-result-icon">
+            !
+        </div>
+
+        <div>
+
+            <span class="pdf-result-label">
+                ANALYSIS ERROR
+            </span>
+
+            <h2>
+                Unable to Analyze Document
+            </h2>
+
+            <p>
+                {{ error }}
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- AI ANSWER -->
+
+    {% if answer %}
+
+    <div class="pdf-answer-card">
+
+
+        <!-- ANSWER HEADER -->
+
+        <div class="pdf-answer-header">
+
+            <div class="pdf-answer-icon">
+                🤖
+            </div>
+
+            <div>
+
+                <span>
+                    AI DOCUMENT ANALYSIS
+                </span>
+
+                <h2>
+                    AI Answer
+                </h2>
+
+                <p>
+                    Answer generated from your uploaded document.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ANSWER CONTENT -->
+
+        <div class="pdf-answer-content">
+
+            <div class="pdf-answer-bullet">
+                💡
+            </div>
+
+            <div class="pdf-answer-text">
+
+                {% if answer is mapping %}
+
+                    {{ answer.answer }}
+
+                {% else %}
+
+                    {{ answer }}
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ANSWER INFORMATION -->
+
+        {% if answer is mapping %}
+
+        <div class="pdf-answer-meta">
+
+
+            {% if answer.chunks %}
+
+            <div class="pdf-meta-item">
+
+                <span class="pdf-meta-icon">
+                    📑
+                </span>
+
+                <div>
+
+                    <strong>
+                        {{ answer.chunks }}
+                    </strong>
+
+                    <small>
+                        Relevant sections
+                    </small>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if answer.word_count %}
+
+            <div class="pdf-meta-item">
+
+                <span class="pdf-meta-icon">
+                    📝
+                </span>
+
+                <div>
+
+                    <strong>
+                        {{ answer.word_count }}
+                    </strong>
+
+                    <small>
+                        Words analyzed
+                    </small>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

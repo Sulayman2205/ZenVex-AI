@@ -1,0 +1,573 @@
+{% extends "base.html" %}
+
+{% block title %}
+AI Resume Analyzer | ZENVEX
+{% endblock %}
+
+{% block content %}
+
+<div class="resume-page">
+
+    <!-- BACK BUTTON -->
+
+    <a href="/" class="resume-back-button">
+        ← Back to ZENVEX
+    </a>
+
+
+    <!-- HERO -->
+
+    <section class="resume-hero">
+
+        <div class="resume-hero-badge">
+            📄
+            <span>AI CAREER TOOL</span>
+        </div>
+
+        <p class="resume-eyebrow">
+            AI CAREER TOOL
+        </p>
+
+        <h1>
+            AI Resume
+            <span>Analyzer</span>
+        </h1>
+
+        <p class="resume-hero-description">
+            Upload your resume and get an AI-powered analysis
+            of your skills, ATS compatibility, career matches,
+            and areas for improvement.
+        </p>
+
+    </section>
+
+
+    <!-- UPLOAD CARD -->
+
+    <section class="resume-upload-card">
+
+
+        <div class="resume-upload-header">
+
+            <div class="resume-main-icon">
+                📄
+            </div>
+
+            <h2>
+                Upload Your Resume
+            </h2>
+
+            <p>
+                Upload your resume in PDF format and let AI
+                analyze it for you.
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="resume-form"
+        >
+
+            <label
+    for="resume"
+    class="resume-dropzone"
+    id="resume-dropzone"
+>
+
+    <div class="dropzone-icon" id="resume-upload-icon">
+        ↑
+    </div>
+
+    <strong id="resume-file-name">
+        Choose your PDF resume
+    </strong>
+
+    <span id="resume-file-info">
+        PDF files only
+    </span>
+
+</label>
+
+<input
+    type="file"
+    id="resume"
+    name="resume"
+    accept=".pdf"
+    required
+    hidden
+>
+
+            <button
+                type="submit"
+                class="resume-analyze-button"
+            >
+                Analyze Resume
+                <span>→</span>
+            </button>
+
+        </form>
+
+
+        <!-- PRIVACY -->
+
+        <div class="resume-privacy">
+
+            <span>
+                🔒
+            </span>
+
+            <p>
+                Your resume is analyzed securely and is not
+                stored or shared by ZENVEX.
+            </p>
+
+        </div>
+
+
+        <!-- FEATURES -->
+
+        <div class="resume-features">
+
+
+            <div class="resume-feature">
+
+                <div class="resume-feature-icon">
+                    🧠
+                </div>
+
+                <div>
+
+                    <h3>
+                        Skill Detection
+                    </h3>
+
+                    <p>
+                        Identify technical skills
+                        from your resume.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="resume-feature">
+
+                <div class="resume-feature-icon">
+                    🎯
+                </div>
+
+                <div>
+
+                    <h3>
+                        ATS Analysis
+                    </h3>
+
+                    <p>
+                        Find keywords that can
+                        improve ATS compatibility.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="resume-feature">
+
+                <div class="resume-feature-icon">
+                    💼
+                </div>
+
+                <div>
+
+                    <h3>
+                        Career Matching
+                    </h3>
+
+                    <p>
+                        Discover roles that match
+                        your skills and experience.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="resume-feature">
+
+                <div class="resume-feature-icon">
+                    💡
+                </div>
+
+                <div>
+
+                    <h3>
+                        Improvement Tips
+                    </h3>
+
+                    <p>
+                        Get practical suggestions
+                        to strengthen your resume.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ERROR -->
+
+    {% if error %}
+
+    <div class="resume-result-card resume-error">
+
+        <div class="resume-result-icon">
+            !
+        </div>
+
+        <div>
+
+            <span class="resume-result-label">
+                ANALYSIS ERROR
+            </span>
+
+            <h2>
+                Unable to Analyze Resume
+            </h2>
+
+            <p>
+                {{ error }}
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    {% if result %}
+
+
+    <!-- SCORE -->
+
+    <div class="resume-score-card">
+
+        <div class="resume-score-icon">
+            ✓
+        </div>
+
+        <div class="resume-score-content">
+
+            <span>
+                RESUME ANALYSIS COMPLETE
+            </span>
+
+            <h2>
+                Your Resume Score
+            </h2>
+
+            <p>
+                Your resume received a score based on its
+                content, structure, skills, ATS keywords,
+                and contact information.
+            </p>
+
+        </div>
+
+        <div class="resume-score">
+
+            {{ result.score }}
+
+            <small>
+                /100
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="resume-analysis-grid">
+
+
+        <div class="resume-analysis-card">
+
+            <span>
+                RESUME SCORE
+            </span>
+
+            <strong>
+                {{ result.score }}/100
+            </strong>
+
+        </div>
+
+
+        <div class="resume-analysis-card">
+
+            <span>
+                SKILLS DETECTED
+            </span>
+
+            <strong>
+                {{ result.skills|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="resume-analysis-card">
+
+            <span>
+                ATS KEYWORDS
+            </span>
+
+            <strong>
+                {{ result.ats_found|length }}
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- SKILLS -->
+
+    <div class="resume-analysis-section">
+
+        <div class="resume-section-header">
+
+            <div class="resume-section-icon">
+                🧠
+            </div>
+
+            <div>
+
+                <h2>
+                    Skills Detected
+                </h2>
+
+                <p>
+                    Technical skills identified from your resume.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="resume-skill-tags">
+
+            {% if result.skills %}
+
+                {% for skill in result.skills %}
+
+                <span class="resume-skill-tag">
+                    ✓ {{ skill }}
+                </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="resume-empty">
+                    No recognized technical skills were detected.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- JOB ROLES -->
+
+    <div class="resume-analysis-section">
+
+        <div class="resume-section-header">
+
+            <div class="resume-section-icon">
+                💼
+            </div>
+
+            <div>
+
+                <h2>
+                    Suggested Job Roles
+                </h2>
+
+                <p>
+                    Roles that match the skills detected
+                    in your resume.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="resume-role-tags">
+
+            {% if result.job_roles %}
+
+                {% for role in result.job_roles %}
+
+                <span class="resume-role-tag">
+                    → {{ role }}
+                </span>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="resume-empty">
+                    Not enough matching skills to suggest
+                    a specific role.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ATS -->
+
+    <div class="resume-analysis-section">
+
+        <div class="resume-section-header">
+
+            <div class="resume-section-icon">
+                🎯
+            </div>
+
+            <div>
+
+                <h2>
+                    ATS Analysis
+                </h2>
+
+                <p>
+                    Keywords that can improve your resume's
+                    compatibility with applicant tracking systems.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="resume-reasons">
+
+            {% for keyword in result.ats_found %}
+
+            <div class="resume-reason">
+
+                <span class="resume-reason-check">
+                    ✓
+                </span>
+
+                <p>
+                    {{ keyword }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+
+            {% for keyword in result.ats_missing[:5] %}
+
+            <div class="resume-reason resume-missing">
+
+                <span>
+                    +
+                </span>
+
+                <p>
+                    Consider adding:
+                    <strong>{{ keyword }}</strong>
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- SUGGESTIONS -->
+
+    <div class="resume-analysis-section">
+
+        <div class="resume-section-header">
+
+            <div class="resume-section-icon">
+                💡
+            </div>
+
+            <div>
+
+                <h2>
+                    Improvement Suggestions
+                </h2>
+
+                <p>
+                    Practical recommendations for strengthening
+                    your resume.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="resume-reasons">
+
+            {% for suggestion in result.suggestions %}
+
+            <div class="resume-reason">
+
+                <span>
+                    →
+                </span>
+
+                <p>
+                    {{ suggestion }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

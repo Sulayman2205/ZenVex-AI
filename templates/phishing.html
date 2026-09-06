@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+
+{% block title %}
+Phishing URL Detector | ZENVEX
+{% endblock %}
+
+{% block content %}
+
+<div class="phishing-page">
+
+    <!-- BACK BUTTON -->
+
+    <a href="/" class="phishing-back-button">
+        ← Back to ZENVEX
+    </a>
+
+
+    <!-- HERO -->
+
+    <section class="phishing-hero">
+
+        <div class="phishing-hero-badge">
+            🛡️
+            <span>SECURITY TOOL</span>
+        </div>
+
+        <p class="phishing-eyebrow">
+            AI SECURITY TOOL
+        </p>
+
+        <h1>
+            Phishing URL
+            <span>Detector</span>
+        </h1>
+
+        <p class="phishing-hero-description">
+            Analyze a URL using machine learning and security-based
+            risk analysis to identify potentially malicious websites.
+        </p>
+
+    </section>
+
+
+    <!-- MAIN DETECTOR CARD -->
+
+    <section class="phishing-detector-card">
+
+
+        <!-- CARD HEADER -->
+
+        <div class="phishing-card-header">
+
+            <div class="phishing-main-icon">
+                🔍
+            </div>
+
+            <div>
+
+                <h2>
+                    Analyze a URL
+                </h2>
+
+                <p>
+                    Enter the website address you want to check
+                    for potential phishing indicators.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form method="POST" class="phishing-form">
+
+            <label for="url">
+                Website URL
+            </label>
+
+            <div class="phishing-input-row">
+
+                <div class="phishing-input-wrapper">
+
+                    <span class="url-icon">
+                        🌐
+                    </span>
+
+                    <input
+                        type="text"
+                        id="url"
+                        name="url"
+                        placeholder="https://example.com"
+                        value="{{ url or '' }}"
+                        autocomplete="url"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="phishing-analyze-button"
+                >
+                    Analyze URL
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <p class="phishing-example">
+                🔒 Example: https://google.com
+            </p>
+
+        </form>
+
+
+        <!-- SECURITY NOTICE -->
+
+        <div class="phishing-security-notice">
+
+            <div class="security-notice-icon">
+                🛡️
+            </div>
+
+            <p>
+                We analyze the URL using multiple security features
+                and machine learning to determine the risk level.
+            </p>
+
+        </div>
+
+
+        <!-- FEATURES -->
+
+        <div class="phishing-features">
+
+
+            <div class="phishing-feature">
+
+                <div class="feature-icon">
+                    🛡️
+                </div>
+
+                <div>
+
+                    <h3>
+                        Machine Learning
+                    </h3>
+
+                    <p>
+                        AI model trained on thousands
+                        of phishing and legitimate URLs
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="phishing-feature">
+
+                <div class="feature-icon">
+                    🔍
+                </div>
+
+                <div>
+
+                    <h3>
+                        Risk Analysis
+                    </h3>
+
+                    <p>
+                        Checks multiple security
+                        indicators and patterns
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="phishing-feature">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <div>
+
+                    <h3>
+                        Instant Results
+                    </h3>
+
+                    <p>
+                        Get analysis results in
+                        seconds
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="phishing-feature">
+
+                <div class="feature-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <h3>
+                        Privacy First
+                    </h3>
+
+                    <p>
+                        We do not store or share
+                        your submitted URLs
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULTS -->
+
+    {% if result %}
+
+
+    <!-- ERROR -->
+
+    {% if result == "ERROR" %}
+
+    <div class="phishing-result-card phishing-error">
+
+        <div class="phishing-result-icon">
+            !
+        </div>
+
+        <div>
+
+            <span class="phishing-result-label">
+                ANALYSIS ERROR
+            </span>
+
+            <h2>
+                Unable to Analyze URL
+            </h2>
+
+            <p>
+                Something went wrong while processing the URL.
+                Please check the URL and try again.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- PHISHING -->
+
+    {% elif result == "PHISHING" %}
+
+    <div class="phishing-result-card phishing-danger">
+
+        <div class="phishing-result-icon">
+            !
+        </div>
+
+        <div>
+
+            <span class="phishing-result-label">
+                THREAT DETECTED
+            </span>
+
+            <h2>
+                Potential Phishing URL
+            </h2>
+
+            <p>
+                The security system detected characteristics
+                associated with potentially malicious URLs.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- LEGITIMATE -->
+
+    {% elif result == "LEGITIMATE" %}
+
+    <div class="phishing-result-card phishing-safe">
+
+        <div class="phishing-result-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <span class="phishing-result-label">
+                LEGITIMATE
+            </span>
+
+            <h2>
+                URL Appears Legitimate
+            </h2>
+
+            <p>
+                No major phishing indicators were detected
+                for this URL.
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- STATISTICS -->
+
+    {% if confidence is not none %}
+
+    <div class="phishing-analysis-grid">
+
+
+        <div class="phishing-analysis-card">
+
+            <span>
+                MODEL CONFIDENCE
+            </span>
+
+            <strong>
+                {{ "%.2f"|format(confidence) }}%
+            </strong>
+
+        </div>
+
+
+        <div class="phishing-analysis-card">
+
+            <span>
+                RISK SCORE
+            </span>
+
+            <strong>
+                {{ risk_score }}/100
+            </strong>
+
+        </div>
+
+
+        <div class="phishing-analysis-card">
+
+            <span>
+                CLASSIFICATION
+            </span>
+
+            <strong>
+                {{ result }}
+            </strong>
+
+        </div>
+
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- RISK ANALYSIS -->
+
+    <div class="phishing-risk-card">
+
+        <div class="phishing-risk-header">
+
+            <div class="phishing-risk-icon">
+                🔎
+            </div>
+
+            <div>
+
+                <h2>
+                    Risk Analysis
+                </h2>
+
+                <p>
+                    Additional security indicators detected
+                    in the submitted URL.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        {% if reasons %}
+
+        <div class="phishing-risk-reasons">
+
+            {% for reason in reasons %}
+
+            <div class="phishing-risk-reason">
+
+                <span>
+                    !
+                </span>
+
+                <p>
+                    {{ reason }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="phishing-safe-message">
+
+            <span>
+                ✓
+            </span>
+
+            <p>
+                No major URL-based risk indicators detected.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

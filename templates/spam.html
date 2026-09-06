@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+
+{% block title %}
+Spam & Fraud Detector | AI HUB
+{% endblock %}
+
+{% block content %}
+
+<div class="spam-page">
+
+    <!-- BACK BUTTON -->
+    <a href="/" class="spam-back">
+        ← Back to Home
+    </a>
+
+
+    <!-- HEADER -->
+    <div class="spam-header">
+
+        <div class="spam-badge">
+            🛡️ &nbsp; SECURITY TOOL
+        </div>
+
+        <h1>
+            Spam & Fraud Detector
+        </h1>
+
+        <p>
+            Analyze messages using AI to detect spam, scams and fraudulent content.
+        </p>
+
+    </div>
+
+
+    <!-- MAIN ANALYZER -->
+    <div class="spam-analyzer">
+
+        <div class="spam-input-header">
+
+            <div class="spam-input-title">
+
+                <div class="spam-message-icon">
+                    💬
+                </div>
+
+                <div>
+                    <h2>
+                        Enter a message to analyze
+                    </h2>
+
+                    <p>
+                        Paste the message you want to analyze in the box below.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="character-count">
+                <span id="charCount">0</span> / 5000 characters
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <form method="POST">
+
+            <textarea
+                name="message"
+                id="spamMessage"
+                maxlength="5000"
+                placeholder="Paste a suspicious message here..."
+                required
+            >{{ message or "" }}</textarea>
+
+
+            <div class="spam-form-bottom">
+
+                <div class="privacy-note">
+                    🛡️
+                    <span>
+                        We do not store or share your messages.
+                    </span>
+                </div>
+
+                <button
+                    type="submit"
+                    class="spam-analyze-button"
+                >
+                    ✨ Analyze Message
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- RESULTS -->
+    {% if result %}
+
+    <div class="spam-results">
+
+        {% if result == "ERROR" %}
+
+        <div class="spam-result-card spam-danger">
+
+            <div class="spam-result-icon">
+                ⚠️
+            </div>
+
+            <div>
+                <span class="spam-result-label">
+                    ANALYSIS ERROR
+                </span>
+
+                <h2>
+                    Unable to Analyze Message
+                </h2>
+
+                <p>
+                    Something went wrong while processing the message.
+                </p>
+            </div>
+
+        </div>
+
+
+        {% elif result == "SPAM" %}
+
+        <div class="spam-result-card spam-danger">
+
+            <div class="spam-result-icon">
+                ⚠️
+            </div>
+
+            <div>
+                <span class="spam-result-label">
+                    THREAT DETECTED
+                </span>
+
+                <h2>
+                    Potential Spam / Fraud
+                </h2>
+
+                <p>
+                    The AI model classified this message as potentially
+                    spam or fraudulent.
+                </p>
+            </div>
+
+        </div>
+
+
+        {% elif result == "LEGITIMATE" %}
+
+        <div class="spam-result-card spam-safe">
+
+            <div class="spam-result-icon">
+                ✓
+            </div>
+
+            <div>
+                <span class="spam-result-label">
+                    LEGITIMATE
+                </span>
+
+                <h2>
+                    Message Appears Legitimate
+                </h2>
+
+                <p>
+                    The AI model did not classify this message as spam.
+                </p>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- STATISTICS -->
+        {% if confidence is not none %}
+
+        <div class="spam-stats">
+
+            <div class="spam-stat">
+                <span>MODEL CONFIDENCE</span>
+                <strong>
+                    {{ "%.2f"|format(confidence) }}%
+                </strong>
+            </div>
+
+            <div class="spam-stat">
+                <span>RISK SCORE</span>
+                <strong>
+                    {{ risk_score }}/100
+                </strong>
+            </div>
+
+            <div class="spam-stat">
+                <span>CLASSIFICATION</span>
+                <strong>
+                    {{ result }}
+                </strong>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- RISK ANALYSIS -->
+        {% if reasons %}
+
+        <div class="spam-risk">
+
+            <div class="spam-risk-header">
+
+                <div class="spam-risk-icon">
+                    🛡️
+                </div>
+
+                <div>
+                    <h2>
+                        Risk Analysis
+                    </h2>
+
+                    <p>
+                        Security indicators detected in the submitted message.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="spam-risk-list">
+
+                {% for reason in reasons %}
+
+                <div class="spam-risk-item">
+                    <span>⚠</span>
+                    <p>{{ reason }}</p>
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        {% if result == "LEGITIMATE" %}
+
+        <div class="spam-risk spam-no-risk">
+
+            <div class="spam-risk-header">
+
+                <div class="spam-risk-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <h2>
+                        No Major Risk Indicators
+                    </h2>
+
+                    <p>
+                        No obvious suspicious patterns were detected.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- INFORMATION CARDS -->
+
+    <div class="spam-info-grid">
+
+        <div class="spam-info-card">
+
+            <div class="spam-info-icon">
+                🧠
+            </div>
+
+            <div>
+                <h3>
+                    AI Powered
+                </h3>
+
+                <p>
+                    Uses a trained TF-IDF and Logistic Regression
+                    model to classify messages.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="spam-info-card">
+
+            <div class="spam-info-icon">
+                🛡️
+            </div>
+
+            <div>
+                <h3>
+                    Fraud Detection
+                </h3>
+
+                <p>
+                    Detects suspicious links, financial requests,
+                    urgency, credentials, prizes and more.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="spam-info-card">
+
+            <div class="spam-info-icon">
+                ⚡
+            </div>
+
+            <div>
+                <h3>
+                    Instant Results
+                </h3>
+
+                <p>
+                    Get classification, confidence, risk score
+                    and explanations in seconds.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const messageBox = document.getElementById("spamMessage");
+const charCount = document.getElementById("charCount");
+
+function updateCharacterCount() {
+    if (messageBox && charCount) {
+        charCount.textContent = messageBox.value.length;
+    }
+}
+
+if (messageBox) {
+    messageBox.addEventListener("input", updateCharacterCount);
+    updateCharacterCount();
+}
+
+</script>
+
+{% endblock %}
