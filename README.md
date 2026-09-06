@@ -239,6 +239,28 @@ The main goals are:
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 ZenVex AI Dashboard
+
+![ZenVex AI Dashboard](screenshots/home.png)
+
+### 🔗 Phishing URL Detector
+
+![Phishing URL Detector](screenshots/phishing.png)
+
+### 📱 Spam & Fraud Detector
+
+![Spam Detector](screenshots/spam.png)
+
+### 📄 AI Resume Analyzer
+
+![AI Resume Analyzer](screenshots/resume.png)
+
+### 🤖 AI PDF Q&A
+
+![AI PDF Q&A](screenshots/pdf-qa.png)
+
 ## Future Improvements
 
 Planned improvements include:
